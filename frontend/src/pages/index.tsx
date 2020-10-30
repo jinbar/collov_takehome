@@ -21,6 +21,7 @@ import "../../node_modules/react-resizable/css/styles.css";
 import { GridTitles } from "../components/GridTitles";
 
 import { WidthProvider, Responsive } from "react-grid-layout";
+import { InputField } from "../components/InputField";
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 const Index = () => {
@@ -29,8 +30,10 @@ const Index = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <Box borderWidth="10px" p="auto">
-      <Button onClick={onOpen}>Add Candidate</Button>
+    <Box>
+      <Button onClick={onOpen} variantColor="teal">
+        Add Candidate
+      </Button>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
@@ -44,72 +47,29 @@ const Index = () => {
                 email: "",
                 phone: "",
               }}
-              onSubmit={(values, {resetForm}) => {
+              onSubmit={(values, { resetForm }) => {
                 addApplicant((oldArray) => [
                   ...oldArray,
                   { i: key.toString(), x: 0, y: 0, w: 1, h: 2, values: values },
                 ]);
                 incrementKey(key + 1);
-                resetForm()
+                resetForm();
               }}
             >
-              {({ values, handleChange }) => {
-                return (
-                  <Form>
-                    <FormControl>
-                      <FormLabel htmlFor="firstname">First Name</FormLabel>
-                      <Input
-                        type="firstname"
-                        id="firstname"
-                        value={values.firstname}
-                        onChange={handleChange}
-                      />
-                    </FormControl>
-                    <FormControl>
-                      <FormLabel htmlFor="lastname">Last Name</FormLabel>
-                      <Input
-                        type="lastname"
-                        id="lastname"
-                        value={values.lastname}
-                        onChange={handleChange}
-                      />
-                    </FormControl>
-                    <FormControl>
-                      <FormLabel htmlFor="email">Email</FormLabel>
-                      <Input
-                        type="email"
-                        id="email"
-                        value={values.email}
-                        onChange={handleChange}
-                      />
-                    </FormControl>
-                    <FormControl>
-                      <FormLabel htmlFor="phone">Phone</FormLabel>
-                      <Input
-                        type="phone"
-                        id="phone"
-                        value={values.phone}
-                        onChange={handleChange}
-                      />
-                    </FormControl>
-                    <Button
-                      mt={2}
-                      type="submit"
-                      variantColor="blue"
-                      mr={3}
-                    >
-                      Add
-                    </Button>
-                  </Form>
-                );
-              }}
+              <Form>
+                <InputField name="firstname" label="First Name" />
+                <InputField name="lastname" label="Last Name" />
+                <InputField name="email" label="Email" type="email" />
+                <InputField name="phone" label="Phone" />
+                <Button mt={2} type="submit" variantColor="blue" mr={3}>
+                  Add
+                </Button>
+              </Form>
             </Formik>
             <Button mt={2} variantColor="blue" mr={3} onClick={onClose}>
               Finish
             </Button>
           </ModalBody>
-
-          <ModalFooter></ModalFooter>
         </ModalContent>
       </Modal>
       <GridTitles />
