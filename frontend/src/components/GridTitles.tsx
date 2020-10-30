@@ -17,6 +17,7 @@ export const GridTitles = () => {
       className="layout"
       layout={col_names}
       cols={6}
+      //         cols={{ lg: 6, md: 6, sm: 6, xs: 6, xxs: 6 }}
       rowHeight={30}
       width={1200}
       isResizable={false}

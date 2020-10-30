@@ -5,6 +5,9 @@ import "../../node_modules/react-grid-layout/css/styles.css";
 import "../../node_modules/react-resizable/css/styles.css";
 import { GridTitles } from "../components/GridTitles";
 
+import { WidthProvider, Responsive } from "react-grid-layout";
+const ResponsiveReactGridLayout = WidthProvider(Responsive);
+
 const Index = () => {
   const [key, incrementKey] = useState(0);
   const [applicant, addApplicant] = useState([]);
@@ -23,10 +26,11 @@ const Index = () => {
         CLICK ME TO ADD A NEW BOI
       </Button>
       <GridTitles />
-      <GridLayout
+      <ResponsiveReactGridLayout
         className="layout"
         layout={applicant}
-        cols={6}
+        // cols={6}
+        cols={{ lg: 6, md: 6, sm: 6, xs: 6, xxs: 6 }}
         rowHeight={30}
         width={1200}
         isResizable={false}
@@ -38,7 +42,7 @@ const Index = () => {
             </Box>
           );
         })}
-      </GridLayout>
+      </ResponsiveReactGridLayout>
     </Box>
   );
 };
