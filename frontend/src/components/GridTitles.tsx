@@ -3,6 +3,7 @@ import React from "react";
 import GridLayout from "react-grid-layout";
 import "../../node_modules/react-grid-layout/css/styles.css";
 import "../../node_modules/react-resizable/css/styles.css";
+
 export const GridTitles = () => {
   const col_names = [
     { i: "a", x: 0, y: 0, w: 1, h: 2 },
