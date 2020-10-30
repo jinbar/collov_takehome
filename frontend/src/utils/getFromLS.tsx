@@ -1,11 +1,12 @@
-export const getFromLS = () => {
-  let ls = [];
+export const getFromLS = (key) => {
+  let ls = {};
   if (global.localStorage) {
     try {
-      ls = JSON.parse(global.localStorage.getItem("rgl-8")) || {};
+      ls = JSON.parse(global.localStorage.getItem("rgl-7")) || {};
     } catch (e) {
       /*Ignore*/
+      console.log(e)
     }
   }
-  return ls;
+  return ls[key] ? ls[key] : [];
 };

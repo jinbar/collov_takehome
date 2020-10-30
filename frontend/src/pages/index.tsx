@@ -2,32 +2,31 @@ import {
   Box,
   Button,
   Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
   ModalBody,
   ModalCloseButton,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay,
   useDisclosure,
-  FormControl,
-  FormLabel,
-  Input,
 } from "@chakra-ui/core";
-import { Form, Formik, useField } from "formik";
-import React, { useState } from "react";
+import { Form, Formik } from "formik";
+import React, { useEffect, useState } from "react";
 import GridLayout from "react-grid-layout";
 import "../../node_modules/react-grid-layout/css/styles.css";
 import "../../node_modules/react-resizable/css/styles.css";
 import { GridTitles } from "../components/GridTitles";
-
-import { WidthProvider, Responsive } from "react-grid-layout";
 import { InputField } from "../components/InputField";
-const ResponsiveReactGridLayout = WidthProvider(Responsive);
+import { getFromLS } from "../utils/getFromLS";
+import { saveToLS } from "../utils/saveToLS";
 
+const originalLayout = getFromLS("layout");
 const Index = () => {
   const [key, incrementKey] = useState(0);
   const [applicant, addApplicant] = useState([]);
+  const [local_layout, setLayout] = useState(originalLayout);
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  // TODO: save to localstorage if possible. can also do it via database
 
   return (
     <Box>
@@ -50,7 +49,11 @@ const Index = () => {
               onSubmit={(values, { resetForm }) => {
                 addApplicant((oldArray) => [
                   ...oldArray,
-                  { i: key.toString(), x: 0, y: 0, w: 1, h: 2, values: values },
+                  { i: key.toString(), values: values },
+                ]);
+                setLayout((oldArray) => [
+                  ...oldArray,
+                  { i: key.toString(), x: 0, y: 0, w: 1, h: 2 },
                 ]);
                 incrementKey(key + 1);
                 resetForm();
@@ -73,14 +76,17 @@ const Index = () => {
         </ModalContent>
       </Modal>
       <GridTitles />
-      <ResponsiveReactGridLayout
+      <GridLayout
         className="layout"
-        layout={applicant}
-        // cols={6}
-        cols={{ lg: 6, md: 6, sm: 6, xs: 6, xxs: 6 }}
+        layout={local_layout}
+        cols={6}
         rowHeight={100}
         width={1200}
         isResizable={false}
+        onLayoutChange={(layout) => {
+          saveToLS("layout", local_layout);
+          setLayout(layout);
+        }}
       >
         {applicant.map((item) => {
           return (
@@ -91,7 +97,7 @@ const Index = () => {
             </Box>
           );
         })}
-      </ResponsiveReactGridLayout>
+      </GridLayout>
     </Box>
   );
 };

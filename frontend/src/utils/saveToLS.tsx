@@ -1,5 +1,10 @@
-export const saveToLS = (layout) => {
+export const saveToLS = (key, value) => {
   if (global.localStorage) {
-    global.localStorage.setItem("rgl-8", JSON.stringify(layout));
+    global.localStorage.setItem(
+      "rgl-7",
+      JSON.stringify({
+        [key]: value,
+      })
+    );
   }
 };
