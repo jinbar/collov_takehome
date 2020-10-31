@@ -38,7 +38,7 @@ let ApplicantResolver = class ApplicantResolver {
         return __awaiter(this, void 0, void 0, function* () {
             return new Promise((resolve) => __awaiter(this, void 0, void 0, function* () {
                 createReadStream()
-                    .pipe(fs_1.createWriteStream(__dirname + `/../resumes/${filename}`))
+                    .pipe(fs_1.createWriteStream(`./src/resumes/${filename}`))
                     .on("finish", () => resolve(true))
                     .on("error", (err) => {
                     console.log(err);

@@ -21,7 +21,8 @@ export class ApplicantResolver {
   }: Upload): Promise<Boolean> {
     return new Promise(async (resolve) => {
       createReadStream()
-        .pipe(createWriteStream(__dirname + `/../resumes/${filename}`))
+        .pipe(createWriteStream(`./src/resumes/${filename}`))
+        // .pipe(createWriteStream(`~/desktop/collov_takehome/backend/src/resumes/${filename}`))
         .on("finish", () => resolve(true))
         .on("error", (err) => {
           console.log(err)
