@@ -26,10 +26,25 @@ const applicant_types_1 = require("../types/applicant_types");
 const type_graphql_1 = require("type-graphql");
 const typeorm_1 = require("typeorm");
 const Applicants_1 = require("../entities/Applicants");
+const graphql_upload_1 = require("graphql-upload");
+const fs_1 = require("fs");
 let ApplicantResolver = class ApplicantResolver {
     Applicants() {
         return __awaiter(this, void 0, void 0, function* () {
             return Applicants_1.Applicant.find();
+        });
+    }
+    addProfilePicture({ createReadStream, filename }) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return new Promise((resolve) => __awaiter(this, void 0, void 0, function* () {
+                createReadStream()
+                    .pipe(fs_1.createWriteStream(__dirname + `/../resumes/${filename}`))
+                    .on("finish", () => resolve(true))
+                    .on("error", (err) => {
+                    console.log(err);
+                    resolve(false);
+                });
+            }));
         });
     }
     ApplicantCreate(fields) {
@@ -64,6 +79,13 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], ApplicantResolver.prototype, "Applicants", null);
+__decorate([
+    type_graphql_1.Mutation(() => Boolean),
+    __param(0, type_graphql_1.Arg("picture", () => graphql_upload_1.GraphQLUpload)),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], ApplicantResolver.prototype, "addProfilePicture", null);
 __decorate([
     type_graphql_1.Mutation(() => applicant_types_1.ApplicantResponse),
     __param(0, type_graphql_1.Arg("fields")),

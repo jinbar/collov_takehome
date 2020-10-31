@@ -2,9 +2,9 @@ import { ApplicantCreateInput, ApplicantResponse } from "../types/applicant_type
 import { Arg, Mutation, Query, Resolver } from "type-graphql";
 import { getConnection } from "typeorm";
 import { Applicant } from "../entities/Applicants";
-// import { GraphQLUpload } from "graphql-upload"
-// import { Upload } from "../types/upload"
-// import { createWriteStream } from "fs"
+import { GraphQLUpload } from "graphql-upload"
+import { Upload } from "../types/upload"
+import { createWriteStream } from "fs"
 
 @Resolver()
 export class ApplicantResolver {
@@ -13,10 +13,26 @@ export class ApplicantResolver {
     return Applicant.find();
   }
 
+  @Mutation(() => Boolean)
+  async addProfilePicture(@Arg("picture", () => GraphQLUpload)
+  {
+    createReadStream,
+    filename
+  }: Upload): Promise<Boolean> {
+    return new Promise(async (resolve) => {
+      createReadStream()
+        .pipe(createWriteStream(__dirname + `/../resumes/${filename}`))
+        .on("finish", () => resolve(true))
+        .on("error", (err) => {
+          console.log(err)
+          resolve(false)
+        })     
+    });
+  }
+
   @Mutation(() => ApplicantResponse)
   async ApplicantCreate(
     @Arg("fields") fields: ApplicantCreateInput,
-    // @Arg("picture", () => GraphQLUpload) { createReadStream, filename }: Upload
     )
   {
     let new_applicant = new Applicant();
@@ -25,16 +41,6 @@ export class ApplicantResolver {
     new_applicant.email = fields.email;
     new_applicant.phone = fields.phone;
     new_applicant.comments = fields.comments;
-
-    // await new Promise(async (resolve, reject) => {
-    //   createReadStream()
-    //     .pipe(createWriteStream(__dirname + `../resumes/${filename}`))
-    //     .on("finish", () => resolve(true))
-    //     .on("error", () => reject(false))
-      
-    //   new_applicant.resume = __dirname + `../resumes/${filename}`;
-    // })
-
 
     try {
       let boi = await getConnection()

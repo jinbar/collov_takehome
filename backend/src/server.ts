@@ -1,7 +1,7 @@
 import { ApolloServer } from "apollo-server-express";
 import connectRedis from "connect-redis";
 import cors from "cors";
-import express from "express";
+import Express from "express";
 import session from "express-session";
 import redis from "redis";
 import "reflect-metadata";
@@ -9,13 +9,13 @@ import { buildSchema } from "type-graphql";
 import { createConnection } from "typeorm";
 import {
   LOCAL_REDIS_URL,
-
   REDIS_URL,
   __prod__
 } from "./constants";
 import { all_entities } from "./entities/all_entities";
 import { all_resolvers } from "./resolvers/all_resolvers";
 import { MyContext } from "./types/context";
+import { graphqlUploadExpress} from "graphql-upload"
 require("dotenv").config();
 
 const main = async () => {
@@ -30,7 +30,7 @@ const main = async () => {
     synchronize: false,
     entities: all_entities,
   })
-  const app = express()
+  const app = Express()
   const RedisStore = connectRedis(session);
   const redisClient = redis.createClient({
     host: __prod__ ? REDIS_URL : LOCAL_REDIS_URL,
@@ -40,6 +40,8 @@ const main = async () => {
     origin: "http://localhost:3000",
     credentials: true
   }))
+  app.use(graphqlUploadExpress({ maxFileSize: 10000000, maxFiles: 10 }));
+
   app.use(
     session({
       name: "qid",
@@ -68,6 +70,7 @@ const main = async () => {
       res,
     }),
     debug: true,
+    uploads: false,
   });
 
   apolloServer.applyMiddleware({

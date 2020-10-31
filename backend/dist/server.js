@@ -24,6 +24,7 @@ const typeorm_1 = require("typeorm");
 const constants_1 = require("./constants");
 const all_entities_1 = require("./entities/all_entities");
 const all_resolvers_1 = require("./resolvers/all_resolvers");
+const graphql_upload_1 = require("graphql-upload");
 require("dotenv").config();
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
     yield typeorm_1.createConnection({
@@ -47,6 +48,7 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
         origin: "http://localhost:3000",
         credentials: true
     }));
+    app.use(graphql_upload_1.graphqlUploadExpress({ maxFileSize: 10000000, maxFiles: 10 }));
     app.use(express_session_1.default({
         name: "qid",
         store: new RedisStore({
@@ -73,6 +75,7 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
             res,
         }),
         debug: true,
+        uploads: false,
     });
     apolloServer.applyMiddleware({
         app,
