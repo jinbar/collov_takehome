@@ -13,13 +13,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const apollo_server_express_1 = require("apollo-server-express");
+const connect_redis_1 = __importDefault(require("connect-redis"));
+const cors_1 = __importDefault(require("cors"));
 const express_1 = __importDefault(require("express"));
+const express_session_1 = __importDefault(require("express-session"));
+const redis_1 = __importDefault(require("redis"));
 require("reflect-metadata");
 const type_graphql_1 = require("type-graphql");
 const typeorm_1 = require("typeorm");
-const Applicants_1 = require("./entities/Applicants");
+const constants_1 = require("./constants");
+const all_entities_1 = require("./entities/all_entities");
 const all_resolvers_1 = require("./resolvers/all_resolvers");
-const cors_1 = __importDefault(require("cors"));
 require("dotenv").config();
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
     yield typeorm_1.createConnection({
@@ -31,12 +35,33 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
         port: 3306,
         logging: true,
         synchronize: false,
-        entities: [Applicants_1.Applicant]
+        entities: all_entities_1.all_entities,
     });
     const app = express_1.default();
+    const RedisStore = connect_redis_1.default(express_session_1.default);
+    const redisClient = redis_1.default.createClient({
+        host: constants_1.__prod__ ? constants_1.REDIS_URL : constants_1.LOCAL_REDIS_URL,
+        port: 6379,
+    });
     app.use(cors_1.default({
         origin: "http://localhost:3000",
         credentials: true
+    }));
+    app.use(express_session_1.default({
+        name: "qid",
+        store: new RedisStore({
+            client: redisClient,
+            disableTouch: true,
+        }),
+        cookie: {
+            maxAge: 1000 * 60 * 60 * 24 * 365,
+            httpOnly: true,
+            secure: constants_1.__prod__,
+            sameSite: "lax",
+        },
+        saveUninitialized: false,
+        secret: "secret",
+        resave: false,
     }));
     const apolloServer = new apollo_server_express_1.ApolloServer({
         schema: yield type_graphql_1.buildSchema({

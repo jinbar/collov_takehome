@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.all_resolvers = void 0;
 const ApplicantResolver_1 = require("./ApplicantResolver");
-const plswork_1 = require("./plswork");
+const User_1 = require("./User");
 exports.all_resolvers = [
-    ApplicantResolver_1.ApplicantResolver, plswork_1.ProfilePictureResolver
+    ApplicantResolver_1.ApplicantResolver, User_1.UsersResolver
 ];
 //# sourceMappingURL=all_resolvers.js.map
