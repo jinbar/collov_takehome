@@ -19,6 +19,7 @@ const type_graphql_1 = require("type-graphql");
 const typeorm_1 = require("typeorm");
 const Applicants_1 = require("./entities/Applicants");
 const all_resolvers_1 = require("./resolvers/all_resolvers");
+const cors_1 = __importDefault(require("cors"));
 require("dotenv").config();
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
     yield typeorm_1.createConnection({
@@ -33,6 +34,10 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
         entities: [Applicants_1.Applicant]
     });
     const app = express_1.default();
+    app.use(cors_1.default({
+        origin: "http://localhost:3000",
+        credentials: true
+    }));
     const apolloServer = new apollo_server_express_1.ApolloServer({
         schema: yield type_graphql_1.buildSchema({
             resolvers: all_resolvers_1.all_resolvers,

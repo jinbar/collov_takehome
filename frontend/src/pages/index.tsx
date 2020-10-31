@@ -16,6 +16,7 @@ import "../../node_modules/react-grid-layout/css/styles.css";
 import "../../node_modules/react-resizable/css/styles.css";
 import { GridTitles } from "../components/GridTitles";
 import { InputField } from "../components/InputField";
+import { useApplicantCreateMutation } from "../generated/graphql";
 import { getFromLS } from "../utils/getFromLS";
 import { saveToLS } from "../utils/saveToLS";
 
@@ -26,6 +27,7 @@ const Index = () => {
   const [local_layout, setLayout] = useState(originalLayout);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  const [, addApp] = useApplicantCreateMutation();
   // TODO: save to localstorage if possible. can also do it via database
 
   return (
@@ -41,12 +43,13 @@ const Index = () => {
           <ModalBody>
             <Formik
               initialValues={{
-                firstname: "",
-                lastname: "",
+                first_name: "",
+                last_name: "",
                 email: "",
                 phone: "",
+                comments: "",
               }}
-              onSubmit={(values, { resetForm }) => {
+              onSubmit={async (values, { resetForm }) => {
                 addApplicant((oldArray) => [
                   ...oldArray,
                   { i: key.toString(), values: values },
@@ -57,13 +60,15 @@ const Index = () => {
                 ]);
                 incrementKey(key + 1);
                 resetForm();
+                console.log(await addApp(values))
               }}
             >
               <Form>
-                <InputField name="firstname" label="First Name" />
-                <InputField name="lastname" label="Last Name" />
+                <InputField name="first_name" label="First Name" />
+                <InputField name="last_name" label="Last Name" />
                 <InputField name="email" label="Email" type="email" />
                 <InputField name="phone" label="Phone" />
+                <InputField name="comments" label="Comments" />
                 <Button mt={2} type="submit" variantColor="blue" mr={3}>
                   Add
                 </Button>
@@ -91,9 +96,10 @@ const Index = () => {
         {applicant.map((item) => {
           return (
             <Box key={item.i} bg="tomato" p={2}>
-              <Box>{item.values.firstname + " " + item.values.lastname}</Box>
+              <Box>{item.values.first_name + " " + item.values.last_name}</Box>
               <Box>{item.values.email}</Box>
               <Box>{item.values.phone}</Box>
+              <Box>{item.values.comments}</Box>
             </Box>
           );
         })}

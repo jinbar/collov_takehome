@@ -21,58 +21,38 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ApplicantResolver = void 0;
-const applicant_types_1 = require("../types/applicant_types");
+exports.ProfilePictureResolver = void 0;
 const type_graphql_1 = require("type-graphql");
-const typeorm_1 = require("typeorm");
-const Applicants_1 = require("../entities/Applicants");
-let ApplicantResolver = class ApplicantResolver {
-    Applicants() {
+const graphql_upload_1 = require("graphql-upload");
+const fs_1 = require("fs");
+let ProfilePictureResolver = class ProfilePictureResolver {
+    addProfilePicture({ createReadStream, filename }) {
         return __awaiter(this, void 0, void 0, function* () {
-            return Applicants_1.Applicant.find();
-        });
-    }
-    ApplicantCreate(fields) {
-        return __awaiter(this, void 0, void 0, function* () {
-            let new_applicant = new Applicants_1.Applicant();
-            new_applicant.first_name = fields.first_name;
-            new_applicant.last_name = fields.last_name;
-            new_applicant.email = fields.email;
-            new_applicant.phone = fields.phone;
-            new_applicant.comments = fields.comments;
-            try {
-                let boi = yield typeorm_1.getConnection()
-                    .createQueryBuilder()
-                    .insert()
-                    .into("applicants")
-                    .values(new_applicant)
-                    .execute();
-                new_applicant.applicant_id = boi.raw.insertId;
-            }
-            catch (err) {
-                return {
-                    error: err,
-                };
-            }
-            return { applicant: new_applicant };
+            yield new Promise(() => __awaiter(this, void 0, void 0, function* () {
+                return createReadStream()
+                    .pipe(fs_1.createWriteStream(__dirname + `/../resumes/${filename}`))
+                    .on("finish", () => {
+                    console.log("y7eet");
+                    return true;
+                })
+                    .on("error", () => {
+                    console.log("sadge");
+                    return false;
+                });
+            }));
+            return true;
         });
     }
 };
 __decorate([
-    type_graphql_1.Query(() => [Applicants_1.Applicant]),
+    type_graphql_1.Mutation(() => Boolean),
+    __param(0, type_graphql_1.Arg("picture", () => graphql_upload_1.GraphQLUpload)),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
-], ApplicantResolver.prototype, "Applicants", null);
-__decorate([
-    type_graphql_1.Mutation(() => applicant_types_1.ApplicantResponse),
-    __param(0, type_graphql_1.Arg("fields")),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [applicant_types_1.ApplicantCreateInput]),
-    __metadata("design:returntype", Promise)
-], ApplicantResolver.prototype, "ApplicantCreate", null);
-ApplicantResolver = __decorate([
+], ProfilePictureResolver.prototype, "addProfilePicture", null);
+ProfilePictureResolver = __decorate([
     type_graphql_1.Resolver()
-], ApplicantResolver);
-exports.ApplicantResolver = ApplicantResolver;
-//# sourceMappingURL=ApplicantResolver.js.map
+], ProfilePictureResolver);
+exports.ProfilePictureResolver = ProfilePictureResolver;
+//# sourceMappingURL=plswork.js.map

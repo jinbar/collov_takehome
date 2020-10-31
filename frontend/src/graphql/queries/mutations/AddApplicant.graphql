@@ -1,0 +1,13 @@
+mutation ApplicantCreate($first_name: String!, $last_name: String!, $email: String!, $phone: String!, $comments: String! ) {
+  ApplicantCreate(fields:{first_name: $first_name, last_name: $last_name, email: $email, phone:$phone, comments:$comments}) {
+    error
+    applicant {
+      applicant_id
+      first_name
+      last_name
+      email
+      phone
+      comments
+    }
+  }
+}

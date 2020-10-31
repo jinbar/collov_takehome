@@ -15,10 +15,10 @@ const typeorm_1 = require("typeorm");
 let Applicant = class Applicant extends typeorm_1.BaseEntity {
 };
 __decorate([
-    type_graphql_1.Field(() => Number),
+    type_graphql_1.Field(),
     typeorm_1.PrimaryColumn(),
     __metadata("design:type", Number)
-], Applicant.prototype, "user_id", void 0);
+], Applicant.prototype, "applicant_id", void 0);
 __decorate([
     type_graphql_1.Field(),
     typeorm_1.Column({ type: "varchar", length: 45 }),
@@ -33,7 +33,7 @@ __decorate([
     type_graphql_1.Field(),
     typeorm_1.Column({ type: "varchar", length: 45 }),
     __metadata("design:type", String)
-], Applicant.prototype, "Email", void 0);
+], Applicant.prototype, "email", void 0);
 __decorate([
     type_graphql_1.Field(),
     typeorm_1.Column({ type: "varchar", length: 45 }),
@@ -44,6 +44,11 @@ __decorate([
     typeorm_1.Column({ type: "varchar", length: 300 }),
     __metadata("design:type", String)
 ], Applicant.prototype, "comments", void 0);
+__decorate([
+    type_graphql_1.Field(),
+    typeorm_1.Column({ type: "varchar", length: 100 }),
+    __metadata("design:type", String)
+], Applicant.prototype, "resume", void 0);
 Applicant = __decorate([
     type_graphql_1.ObjectType(),
     typeorm_1.Entity("applicants")

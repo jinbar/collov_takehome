@@ -6,6 +6,7 @@ import { createConnection } from "typeorm";
 import { Applicant } from "./entities/Applicants";
 import { all_resolvers } from "./resolvers/all_resolvers";
 import { MyContext } from "./types/context";
+import cors from "cors"
 require("dotenv").config();
 
 const main = async () => {
@@ -21,6 +22,11 @@ const main = async () => {
     entities:[Applicant]
   })
   const app = express()
+  app.use(cors({
+    origin: "http://localhost:3000",
+    credentials: true
+  }))
+
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
       resolvers: all_resolvers,

@@ -9,9 +9,9 @@ import {
 @ObjectType()
 @Entity("applicants")
 export class Applicant extends BaseEntity {
-  @Field(() => Number)
+  @Field()
   @PrimaryColumn()
-  user_id!: Number;
+  applicant_id!: Number;
 
   @Field()
   @Column({type: "varchar", length: 45 })
@@ -23,7 +23,7 @@ export class Applicant extends BaseEntity {
 
   @Field()
   @Column({type: "varchar", length: 45 })
-  Email!: string;
+  email!: string;
 
   @Field()
   @Column({type: "varchar", length: 45 })
@@ -32,4 +32,8 @@ export class Applicant extends BaseEntity {
   @Field()
   @Column({type: "varchar", length: 300 })
   comments!: string;
+  
+  @Field()
+  @Column({type: "varchar", length: 100 })
+  resume!: string;
 }

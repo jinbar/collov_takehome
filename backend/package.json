@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/cors": "^2.8.8",
     "@types/node": "^14.14.6",
     "nodemon": "^2.0.6",
     "typescript": "^4.0.5"
@@ -21,6 +22,7 @@
     "apollo-server-express": "^2.19.0",
     "class-validator": "^0.12.2",
     "connect-redis": "^5.0.0",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
     "mysql": "^2.18.1",
