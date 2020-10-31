@@ -7,8 +7,9 @@ import {
   ModalContent,
   ModalHeader,
   ModalOverlay,
-  useDisclosure,
+  useDisclosure
 } from "@chakra-ui/core";
+import { Console } from "console";
 import { Form, Formik } from "formik";
 import React, { useEffect, useState } from "react";
 import GridLayout from "react-grid-layout";
@@ -22,19 +23,21 @@ import { getFromLS } from "../utils/getFromLS";
 import { saveToLS } from "../utils/saveToLS";
 
 const originalLayout = getFromLS("layout");
+const originalApplicants = getFromLS("applicant");
+
 const Index = () => {
-  const [key, incrementKey] = useState(0);
-  const [applicant, addApplicant] = useState([]);
+  const [applicant, addApplicant] = useState(originalApplicants);
   const [local_layout, setLayout] = useState(originalLayout);
   const { isOpen, onOpen, onClose } = useDisclosure();
-
   const [, addApp] = useApplicantCreateMutation();
-  // TODO: save to localstorage if possible. can also do it via database
-
+  useEffect(() => {
+    saveToLS("layout", local_layout);
+    saveToLS("applicant", applicant);
+  },[local_layout, applicant])
   return (
     <>
     <NavBar />
-    <Box>
+    <Box borderWidth={10}>
       <Button onClick={onOpen} variantColor="teal">
         Add Candidate
       </Button>
@@ -53,17 +56,17 @@ const Index = () => {
                 comments: "",
               }}
               onSubmit={async (values, { resetForm }) => {
-                addApplicant((oldArray) => [
-                  ...oldArray,
-                  { i: key.toString(), values: values },
-                ]);
+                let response = await addApp(values);
+                let id = response.data.ApplicantCreate.applicant.applicant_id;
                 setLayout((oldArray) => [
                   ...oldArray,
-                  { i: key.toString(), x: 0, y: 0, w: 1, h: 2 },
+                  { i: id.toString(), x: 0, y: 0, w: 1, h: 2 },
                 ]);
-                incrementKey(key + 1);
-                resetForm();
-                console.log(await addApp(values))
+                addApplicant((oldArray) => [
+                  ...oldArray,
+                  { i: id.toString(), values: values },
+                ])
+                resetForm();                
               }}
             >
               <Form>
@@ -92,13 +95,13 @@ const Index = () => {
         width={1200}
         isResizable={false}
         onLayoutChange={(layout) => {
-          saveToLS("layout", local_layout);
           setLayout(layout);
+          addApplicant(applicant)
         }}
       >
         {applicant.map((item) => {
           return (
-            <Box key={item.i} bg="tomato" p={2}>
+            <Box key={item.i} bg="tomato" p={2} overflowY="scroll" overflowX="hidden">
               <Box>{item.values.first_name + " " + item.values.last_name}</Box>
               <Box>{item.values.email}</Box>
               <Box>{item.values.phone}</Box>

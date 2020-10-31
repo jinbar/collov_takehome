@@ -4,9 +4,6 @@ import { cacheExchange } from "@urql/exchange-graphcache";
 import theme from "../theme";
 import { betterUpdateQuery } from "../utils/betterUpdateQuery";
 import { LoginMutation, LogoutMutation, MeDocument, MeQuery, RegisterMutation } from "../generated/graphql";
-
-// const client = createClient({url: "http://localhost:5001/graphql"});
-
 const client = createClient({
   url: "http://localhost:5001/graphql",
   fetchOptions: {
