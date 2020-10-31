@@ -37,7 +37,7 @@ const Index = () => {
   return (
     <>
     <NavBar />
-    <Box borderWidth={10}>
+    <Box w={1200} maxWidth={1600} marginX="auto">
       <Button onClick={onOpen} variantColor="teal">
         Add Candidate
       </Button>
@@ -101,7 +101,7 @@ const Index = () => {
       >
         {applicant.map((item) => {
           return (
-            <Box key={item.i} bg="tomato" p={2} overflowY="scroll" overflowX="hidden">
+            <Box key={item.i} bg="tomato" p={2} overflowY="scroll" overflowX="hidden" wordBreak="break-word">
               <Box>{item.values.first_name + " " + item.values.last_name}</Box>
               <Box>{item.values.email}</Box>
               <Box>{item.values.phone}</Box>
