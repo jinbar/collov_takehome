@@ -22,7 +22,7 @@ export class UsersResolver {
       return undefined;
     }
     const user = await User.findOne({
-      where: { User_ID: req.session.user_id },
+      where: { user_id: req.session.user_id },
     });
     return user;
   }
@@ -36,7 +36,7 @@ export class UsersResolver {
       return {
         errors: [
           {
-            field: "Username",
+            field: "username",
             message: "Username has to be between 2 and 32 characters",
           },
         ],
@@ -47,7 +47,7 @@ export class UsersResolver {
       return {
         errors: [
           {
-            field: "Password",
+            field: "password",
             message: "Password has to between 6 and 64 characters",
           },
         ],
@@ -73,7 +73,7 @@ export class UsersResolver {
           return {
             errors: [
               {
-                field: "Username",
+                field: "username",
                 message: "That username is taken",
               },
             ],
@@ -93,6 +93,9 @@ export class UsersResolver {
     
     // just log them in once they register
     req.session.user_id = user_id;
+    console.log("p33p00p00")
+    console.log(req.session.user_id)
+    new_user.user_id = user_id;
     return { user: new_user };
   }
 
@@ -106,7 +109,7 @@ export class UsersResolver {
       return {
         errors: [
           {
-            field: "Username",
+            field: "username",
             message: "Username does not exist",
           },
         ],
@@ -117,7 +120,7 @@ export class UsersResolver {
       return {
         errors: [
           {
-            field: "Password",
+            field: "password",
             message: "Password is incorrect",
           },
         ],

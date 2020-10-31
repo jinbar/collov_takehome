@@ -58,7 +58,7 @@ let UsersResolver = class UsersResolver {
                 return undefined;
             }
             const user = yield Users_1.User.findOne({
-                where: { User_ID: req.session.user_id },
+                where: { user_id: req.session.user_id },
             });
             return user;
         });
@@ -69,7 +69,7 @@ let UsersResolver = class UsersResolver {
                 return {
                     errors: [
                         {
-                            field: "Username",
+                            field: "username",
                             message: "Username has to be between 2 and 32 characters",
                         },
                     ],
@@ -79,7 +79,7 @@ let UsersResolver = class UsersResolver {
                 return {
                     errors: [
                         {
-                            field: "Password",
+                            field: "password",
                             message: "Password has to between 6 and 64 characters",
                         },
                     ],
@@ -105,7 +105,7 @@ let UsersResolver = class UsersResolver {
                         return {
                             errors: [
                                 {
-                                    field: "Username",
+                                    field: "username",
                                     message: "That username is taken",
                                 },
                             ],
@@ -124,6 +124,9 @@ let UsersResolver = class UsersResolver {
                 }
             }
             req.session.user_id = user_id;
+            console.log("p33p00p00");
+            console.log(req.session.user_id);
+            new_user.user_id = user_id;
             return { user: new_user };
         });
     }
@@ -134,7 +137,7 @@ let UsersResolver = class UsersResolver {
                 return {
                     errors: [
                         {
-                            field: "Username",
+                            field: "username",
                             message: "Username does not exist",
                         },
                     ],
@@ -145,7 +148,7 @@ let UsersResolver = class UsersResolver {
                 return {
                     errors: [
                         {
-                            field: "Password",
+                            field: "password",
                             message: "Password is incorrect",
                         },
                     ],

@@ -16,6 +16,7 @@ import "../../node_modules/react-grid-layout/css/styles.css";
 import "../../node_modules/react-resizable/css/styles.css";
 import { GridTitles } from "../components/GridTitles";
 import { InputField } from "../components/InputField";
+import { NavBar } from "../components/Navbar";
 import { useApplicantCreateMutation } from "../generated/graphql";
 import { getFromLS } from "../utils/getFromLS";
 import { saveToLS } from "../utils/saveToLS";
@@ -31,6 +32,8 @@ const Index = () => {
   // TODO: save to localstorage if possible. can also do it via database
 
   return (
+    <>
+    <NavBar />
     <Box>
       <Button onClick={onOpen} variantColor="teal">
         Add Candidate
@@ -105,6 +108,7 @@ const Index = () => {
         })}
       </GridLayout>
     </Box>
+    </>
   );
 };
 
