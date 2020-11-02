@@ -20,5 +20,6 @@ project will be running on [`http://localhost:3000`]
   * set the first key to `operations` and the value to `{"query":"mutation AddResume($resume: Upload!) {\n  AddResume(resume: $resume)\n}"}`
   * set the second key to `map` and the value to `{ "0": ["variables.resume"] }`
   * set the third key to `0` and make the type a file. Then upload any file into the value. It will show up in the `backend/src/resumes` folder
-3. Try registering and logging in. It will create a cookie with name `qid` and will remain there for a year. 
+  * check the `postman.png` for reference
+3. Try registering and logging in. It will create a cookie with name `qid` and will remain there for a year. Passwords are hashed with argon2 and the hash is stored into the database
 4. This is on github.
