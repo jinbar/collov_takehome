@@ -1,0 +1,3 @@
+mutation AddResume($resume: Upload! ) {
+  AddResume(resume: $resume)
+}

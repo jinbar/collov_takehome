@@ -34,7 +34,7 @@ let ApplicantResolver = class ApplicantResolver {
             return Applicants_1.Applicant.find();
         });
     }
-    addProfilePicture({ createReadStream, filename }) {
+    AddResume({ createReadStream, filename }) {
         return __awaiter(this, void 0, void 0, function* () {
             return new Promise((resolve) => __awaiter(this, void 0, void 0, function* () {
                 createReadStream()
@@ -81,11 +81,11 @@ __decorate([
 ], ApplicantResolver.prototype, "Applicants", null);
 __decorate([
     type_graphql_1.Mutation(() => Boolean),
-    __param(0, type_graphql_1.Arg("picture", () => graphql_upload_1.GraphQLUpload)),
+    __param(0, type_graphql_1.Arg("resume", () => graphql_upload_1.GraphQLUpload)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
-], ApplicantResolver.prototype, "addProfilePicture", null);
+], ApplicantResolver.prototype, "AddResume", null);
 __decorate([
     type_graphql_1.Mutation(() => applicant_types_1.ApplicantResponse),
     __param(0, type_graphql_1.Arg("fields")),

@@ -3,8 +3,9 @@ import { Arg, Mutation, Query, Resolver } from "type-graphql";
 import { getConnection } from "typeorm";
 import { Applicant } from "../entities/Applicants";
 import { GraphQLUpload } from "graphql-upload"
-import { Upload } from "../types/upload"
+// import { Upload } from "../types/upload"
 import { createWriteStream } from "fs"
+import { Upload } from "src/types/upload";
 
 @Resolver()
 export class ApplicantResolver {
@@ -14,17 +15,15 @@ export class ApplicantResolver {
   }
 
   @Mutation(() => Boolean)
-  async addProfilePicture(@Arg("picture", () => GraphQLUpload)
-  {
+  async AddResume(@Arg("resume", () => GraphQLUpload) {
     createReadStream,
     filename
-  }: Upload): Promise<Boolean> {
+  } : Upload): Promise<Boolean> {
     return new Promise(async (resolve) => {
       createReadStream()
         .pipe(createWriteStream(`./src/resumes/${filename}`))
-        // .pipe(createWriteStream(`~/desktop/collov_takehome/backend/src/resumes/${filename}`))
         .on("finish", () => resolve(true))
-        .on("error", (err) => {
+        .on("error", (err : any) => {
           console.log(err)
           resolve(false)
         })     

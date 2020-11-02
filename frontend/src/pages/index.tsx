@@ -9,7 +9,6 @@ import {
   ModalOverlay,
   useDisclosure
 } from "@chakra-ui/core";
-import { Console } from "console";
 import { Form, Formik } from "formik";
 import React, { useEffect, useState } from "react";
 import GridLayout from "react-grid-layout";
@@ -18,7 +17,7 @@ import "../../node_modules/react-resizable/css/styles.css";
 import { GridTitles } from "../components/GridTitles";
 import { InputField } from "../components/InputField";
 import { NavBar } from "../components/Navbar";
-import { useApplicantCreateMutation } from "../generated/graphql";
+import { useAddResumeMutation, useApplicantCreateMutation } from "../generated/graphql";
 import { getFromLS } from "../utils/getFromLS";
 import { saveToLS } from "../utils/saveToLS";
 
@@ -30,12 +29,30 @@ const Index = () => {
   const [local_layout, setLayout] = useState(originalLayout);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [, addApp] = useApplicantCreateMutation();
+  const [, addRes] = useAddResumeMutation();
   useEffect(() => {
     saveToLS("layout", local_layout);
     saveToLS("applicant", applicant);
   },[local_layout, applicant])
+
+
+  // const onDrop = useCallback(acceptedFiles => {
+  //   // Do something with the files
+  //   console.log(acceptedFiles[0])
+  //   addRes({resume: acceptedFiles[0]})
+  // }, [])
+  // const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
+
   return (
     <>
+      {/* <div {...getRootProps()}>
+        <input {...getInputProps()} />
+        {
+          isDragActive ?
+            <p>Drop the files here ...</p> :
+            <p>Drag 'n' drop some files here, or click to select files</p>
+        }
+      </div> */}
     <NavBar />
     <Box w={1200} maxWidth={1600} marginX="auto">
       <Button onClick={onOpen} variantColor="teal">

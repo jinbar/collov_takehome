@@ -10,6 +10,8 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /** The `Upload` scalar type represents a file upload. */
+  Upload: any;
 };
 
 export type Query = {
@@ -38,10 +40,16 @@ export type User = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  AddResume: Scalars['Boolean'];
   ApplicantCreate: ApplicantResponse;
   UserRegister: UserResponse;
   UserLogin: UserResponse;
   UserLogout: Scalars['Boolean'];
+};
+
+
+export type MutationAddResumeArgs = {
+  resume: Scalars['Upload'];
 };
 
 
@@ -58,6 +66,7 @@ export type MutationUserRegisterArgs = {
 export type MutationUserLoginArgs = {
   fields: UserLoginInput;
 };
+
 
 export type ApplicantResponse = {
   __typename?: 'ApplicantResponse';
@@ -114,6 +123,16 @@ export type ApplicantCreateMutation = (
       & Pick<Applicant, 'applicant_id' | 'first_name' | 'last_name' | 'email' | 'phone' | 'comments'>
     )> }
   ) }
+);
+
+export type AddResumeMutationVariables = Exact<{
+  resume: Scalars['Upload'];
+}>;
+
+
+export type AddResumeMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'AddResume'>
 );
 
 export type LoginMutationVariables = Exact<{
@@ -196,6 +215,15 @@ export const ApplicantCreateDocument = gql`
 
 export function useApplicantCreateMutation() {
   return Urql.useMutation<ApplicantCreateMutation, ApplicantCreateMutationVariables>(ApplicantCreateDocument);
+};
+export const AddResumeDocument = gql`
+    mutation AddResume($resume: Upload!) {
+  AddResume(resume: $resume)
+}
+    `;
+
+export function useAddResumeMutation() {
+  return Urql.useMutation<AddResumeMutation, AddResumeMutationVariables>(AddResumeDocument);
 };
 export const LoginDocument = gql`
     mutation Login($username: String!, $password: String!) {
