@@ -1,4 +1,4 @@
-HOW TO RUN:
+**HOW TO RUN**:
 1. download redis onto your machine
 2. run `redis-server`
 3. cd into `backend`, and have 2 terminals. run `yarn dev` in one and `yarn watch` in the other
@@ -6,13 +6,13 @@ HOW TO RUN:
 
 project will be running on [`http://localhost:3000`]
 
-TASKS I ACCOMPLISHED:
+**TASKS I ACCOMPLISHED**:
 1. Drag and drop
 2. Half of upload files
 3. User sessions/logins
 4. git
 
-HOW TO TEST:
+**HOW TO TEST**:
 1. Hit add applicant and fill out the form, then drag and drop to different columns.
 2. I got the backend set up for it but not the front end. To test this, open up postman.
   * set it to `POST` request and link to [`http://localhost:5001/graphql`]
