@@ -35,24 +35,8 @@ const Index = () => {
     saveToLS("applicant", applicant);
   },[local_layout, applicant])
 
-
-  // const onDrop = useCallback(acceptedFiles => {
-  //   // Do something with the files
-  //   console.log(acceptedFiles[0])
-  //   addRes({resume: acceptedFiles[0]})
-  // }, [])
-  // const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
-
   return (
     <>
-      {/* <div {...getRootProps()}>
-        <input {...getInputProps()} />
-        {
-          isDragActive ?
-            <p>Drop the files here ...</p> :
-            <p>Drag 'n' drop some files here, or click to select files</p>
-        }
-      </div> */}
     <NavBar />
     <Box w={1200} maxWidth={1600} marginX="auto">
       <Button onClick={onOpen} variantColor="teal">
