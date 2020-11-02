@@ -21,7 +21,6 @@ const redis_1 = __importDefault(require("redis"));
 require("reflect-metadata");
 const type_graphql_1 = require("type-graphql");
 const typeorm_1 = require("typeorm");
-const constants_1 = require("./constants");
 const all_entities_1 = require("./entities/all_entities");
 const all_resolvers_1 = require("./resolvers/all_resolvers");
 const graphql_upload_1 = require("graphql-upload");
@@ -41,7 +40,7 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     const app = express_1.default();
     const RedisStore = connect_redis_1.default(express_session_1.default);
     const redisClient = redis_1.default.createClient({
-        host: constants_1.__prod__ ? constants_1.REDIS_URL : constants_1.LOCAL_REDIS_URL,
+        host: "127.0.0.1",
         port: 6379,
     });
     app.use(cors_1.default({
@@ -58,7 +57,7 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
         cookie: {
             maxAge: 1000 * 60 * 60 * 24 * 365,
             httpOnly: true,
-            secure: constants_1.__prod__,
+            secure: true,
             sameSite: "lax",
         },
         saveUninitialized: false,

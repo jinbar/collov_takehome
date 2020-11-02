@@ -7,11 +7,6 @@ import redis from "redis";
 import "reflect-metadata";
 import { buildSchema } from "type-graphql";
 import { createConnection } from "typeorm";
-import {
-  LOCAL_REDIS_URL,
-  REDIS_URL,
-  __prod__
-} from "./constants";
 import { all_entities } from "./entities/all_entities";
 import { all_resolvers } from "./resolvers/all_resolvers";
 import { MyContext } from "./types/context";
@@ -33,7 +28,7 @@ const main = async () => {
   const app = Express()
   const RedisStore = connectRedis(session);
   const redisClient = redis.createClient({
-    host: __prod__ ? REDIS_URL : LOCAL_REDIS_URL,
+    host: "127.0.0.1",
     port: 6379,
   });
   app.use(cors({
@@ -52,7 +47,7 @@ const main = async () => {
       cookie: {
         maxAge: 1000 * 60 * 60 * 24 * 365, // 1 year
         httpOnly: true, // can't access cookie from browser
-        secure: __prod__, // use https in prod
+        secure: true, // use https in prod
         sameSite: "lax", // csrf
       },
       saveUninitialized: false,
