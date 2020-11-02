@@ -21,5 +21,4 @@ project will be running on [`http://localhost:3000`]
   * set the second key to `map` and the value to `{ "0": ["variables.resume"] }`
   * set the third key to `0` and make the type a file. Then upload any file into the value. It will show up in the `backend/src/resumes` folder
 3. Try registering and logging in. It will create a cookie with name `qid` and will remain there for a year. 
-4. This is on github
-
+4. This is on github.
