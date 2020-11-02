@@ -1,8 +1,10 @@
 **HOW TO RUN**:
-1. download redis onto your machine
-2. run `redis-server`
-3. cd into `backend`, and have 2 terminals. run `yarn dev` in one and `yarn watch` in the other
-4. cd into `frontent` and run `yarn watch`
+1. cd into `backend` and `frontend` and run `yarn` in both to get the packages
+2. run `yarn gen` in `frontend` to get the grphql queries/mutations
+3. download redis onto your machine
+4. run `redis-server`
+5. in `backend` open 2 terminals. run `yarn dev` in one and `yarn watch` in the other
+6. in `frontent` run `yarn watch`
 
 project will be running on [`http://localhost:3000`]
 
