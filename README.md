@@ -23,3 +23,13 @@ project will be running on [`http://localhost:3000`]
   * check the `postman.png` for reference
 3. Try registering and logging in. It will create a cookie with name `qid` and will remain there for a year. Passwords are hashed with argon2 and the hash is stored into the database
 4. This is on github.
+
+**STACK USED**
+Frontend:
+React, urql, graphql, next.js, chakra ui
+
+Backend:
+node.js, express.js, apollo, type-graphql, typeorm
+
+Database:
+mysql
